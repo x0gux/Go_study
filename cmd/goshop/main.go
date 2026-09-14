@@ -22,6 +22,7 @@ func main() {
 
 	e.POST("/items", itemHandler.CreateItem)
 	e.GET("/items/:id", itemHandler.FoundItemById)
+	e.DELETE("/items/:id", itemHandler.DeleteByID)
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	err := e.Start(":" + port)

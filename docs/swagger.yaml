@@ -46,6 +46,34 @@ paths:
       tags:
       - items
   /items/{id}:
+    delete:
+      description: ID로 특정 아이템을 삭제합니다.
+      parameters:
+      - description: Item ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Item'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 아이템 삭제
+      tags:
+      - items
     get:
       description: ID로 특정 아이템을 조회합니다.
       parameters:

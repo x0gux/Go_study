@@ -30,7 +30,7 @@ func NewItemHandler(i domain.ItemService) *ItemHandler {
 // @Failure      500   {object}  map[string]interface{}
 // @Router       /items [post]
 func (i *ItemHandler) CreateItem(c echo.Context) error {
-	var item domain.Item
+	var item domain.ItemRequest
 	if err := c.Bind(&item); err != nil {
 		return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid request body"})
 	}
@@ -56,6 +56,28 @@ func (i *ItemHandler) FoundItemById(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid item ID"})
 	}
 	item, err := i.itemService.GetItemByID(id)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, echo.Map{"error": "Item not found"})
+	}
+	return c.JSON(http.StatusOK, item)
+}
+
+// DeleteByID godoc
+// @Summary      아이템 삭제
+// @Description  ID로 특정 아이템을 삭제합니다.
+// @Tags         items
+// @Produce      json
+// @Param        id   path      int  true  "Item ID"
+// @Success      200  {object}  domain.Item
+// @Failure      400  {object}  map[string]interface{}
+// @Failure      404  {object}  map[string]interface{}
+// @Router       /items/{id} [delete]
+func (i *ItemHandler) DeleteByID(c echo.Context) error {
+	id, err := strconv.Atoi((c.Param("id")))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid item ID"})
+	}
+	item, err := i.itemService.DeleteByID(id)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, echo.Map{"error": "Item not found"})
 	}
