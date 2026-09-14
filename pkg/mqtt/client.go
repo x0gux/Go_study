@@ -11,10 +11,10 @@ var Client mqtt.Client
 
 func Connect() {
 	ConnectOptions = mqtt.NewClientOptions()
-	ConnectOptions.AddBroker("mqtt://localhost:1883")
-	ConnectOptions.SetClientID("goshop_mqtt")
-	ConnectOptions.SetUsername("admin")
-	ConnectOptions.SetPassword("1234")
+	ConnectOptions.AddBroker("mqtt://192.168.0.170:1883")
+	ConnectOptions.SetClientID("sexyguy")
+	ConnectOptions.SetUsername("tusk")
+	ConnectOptions.SetPassword("Tusk12345!")
 
 	Client = mqtt.NewClient(ConnectOptions)
 	token := Client.Connect()
