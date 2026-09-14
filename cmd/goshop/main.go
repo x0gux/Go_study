@@ -3,11 +3,12 @@ package main
 import (
 	"log"
 
+	_ "example.com/m/v2/docs"
 	"example.com/m/v2/internal/handler"
 	"example.com/m/v2/internal/repository"
 	"example.com/m/v2/internal/service"
 	"github.com/labstack/echo/v4"
-	"github.com/swaggo/echo-swagger"
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 func main() {
