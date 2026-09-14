@@ -35,7 +35,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/domain.Item"
+                            "$ref": "#/definitions/domain.ItemRequest"
                         }
                     }
                 ],
@@ -157,6 +157,20 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                }
+            }
+        },
+        "domain.ItemRequest": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"

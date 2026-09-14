@@ -1,6 +1,8 @@
 package service
 
-import "example.com/m/v2/internal/domain"
+import (
+	"example.com/m/v2/internal/domain"
+)
 
 type ItemService struct {
 	itemRepository domain.ItemRepository
@@ -12,10 +14,10 @@ func NewItemService(i domain.ItemRepository) domain.ItemService {
 	}
 }
 
-func (s *ItemService) CreateItem(item *domain.ItemRequest) error {
+func (s *ItemService) CreateItem(item *domain.ItemRequest) (*domain.Item, error) {
 
 	if item.Price <= 0 {
-		return domain.ErrInvalid
+		return nil, domain.ErrInvalid
 	}
 
 	return s.itemRepository.Create(item)

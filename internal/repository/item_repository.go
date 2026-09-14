@@ -14,25 +14,29 @@ type ItemRepository struct {
 
 func NewRepository() domain.ItemRepository {
 	return &ItemRepository{
-		items: make(map[int]domain.Item),
+		items:  make(map[int]domain.Item),
+		nextID: 0,
 	}
 }
 
-func (r *ItemRepository) Create(item *domain.ItemRequest) error {
+func (r *ItemRepository) Create(item *domain.ItemRequest) (*domain.Item, error) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	r.nextID++
 	currentID := r.nextID
 	if _, exists := r.items[currentID]; exists {
-		return domain.ErrAlreadyExist
+		return nil, domain.ErrAlreadyExist
 	}
-	r.items[currentID] = domain.Item{
+	newItem := domain.Item{
 		ID:          currentID,
 		Name:        item.Name,
 		Description: item.Description,
 		Price:       item.Price,
 	}
-	return nil
+
+	r.items[currentID] = newItem
+
+	return &newItem, nil
 }
 
 func (r *ItemRepository) FindByID(id int) (*domain.Item, error) {

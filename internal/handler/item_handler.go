@@ -24,7 +24,7 @@ func NewItemHandler(i domain.ItemService) *ItemHandler {
 // @Tags         items
 // @Accept       json
 // @Produce      json
-// @Param        item  body      domain.Item  true  "생성할 아이템 정보"
+// @Param        item  body      domain.ItemRequest  true  "생성할 아이템 정보"
 // @Success      201   {object}  domain.Item
 // @Failure      400   {object}  map[string]interface{}
 // @Failure      500   {object}  map[string]interface{}
@@ -34,10 +34,19 @@ func (i *ItemHandler) CreateItem(c echo.Context) error {
 	if err := c.Bind(&item); err != nil {
 		return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid request body"})
 	}
-	if err := i.itemService.CreateItem(&item); err != nil {
+	createdItem, err := i.itemService.CreateItem(&item)
+	if err != nil {
 		return c.JSON(http.StatusInternalServerError, echo.Map{"error": "Failed to create item"})
 	}
-	return c.JSON(http.StatusCreated, item)
+
+	returnItem := domain.ItemResponse{
+		ID:          createdItem.ID,
+		Name:        createdItem.Name,
+		Description: createdItem.Description,
+		Price:       createdItem.Price,
+	}
+
+	return c.JSON(http.StatusCreated, returnItem)
 }
 
 // FoundItemById godoc

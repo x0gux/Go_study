@@ -10,6 +10,15 @@ definitions:
       price:
         type: number
     type: object
+  domain.ItemRequest:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+    type: object
 info:
   contact: {}
 paths:
@@ -24,7 +33,7 @@ paths:
         name: item
         required: true
         schema:
-          $ref: '#/definitions/domain.Item'
+          $ref: '#/definitions/domain.ItemRequest'
       produces:
       - application/json
       responses:
