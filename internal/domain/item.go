@@ -1,13 +1,14 @@
 package domain
 
 type Item struct {
-	ID          int     `json:"id"`
+	ID          int     `gorm:"primaryKey;autoIncrement"`
 	Name        string  `json:"name"`
 	Description string  `json:"description"`
 	Price       float64 `json:"price"`
 }
 
 type ItemRequest struct {
+	ID          int     `gorm:"primaryKey;autoIncrement"`
 	Name        string  `json:"name"`
 	Price       float64 `json:"price"`
 	Description string  `json:"description"`

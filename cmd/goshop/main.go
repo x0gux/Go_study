@@ -9,12 +9,19 @@ import (
 	"example.com/m/v2/internal/service"
 	"github.com/labstack/echo/v4"
 	echoSwagger "github.com/swaggo/echo-swagger"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 func main() {
 	e := echo.New()
 
-	itemRepo := repository.NewRepository()
+	dsn := "host=localhost user=postgres password=your_password dbname=amr_db port=5432 sslmode=disable TimeZone=Asia/Seoul"
+
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+	itemRepo := repository.NewRepository(db)
 	itemService := service.NewItemService(itemRepo)
 	itemHandler := handler.NewItemHandler(itemService)
 
@@ -25,8 +32,8 @@ func main() {
 	e.DELETE("/items/:id", itemHandler.DeleteByID)
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
-	err := e.Start(":" + port)
-	if err != nil {
-		log.Fatal(err)
+	errs := e.Start(":" + port)
+	if errs != nil || err != nil {
+		log.Fatal(errs, err)
 	}
 }
