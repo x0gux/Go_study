@@ -23,6 +23,10 @@ func (s *ItemService) CreateItem(item *domain.ItemRequest) (*domain.Item, error)
 	return s.itemRepository.Create(item)
 }
 
+func (s *ItemService) GetAllItem() (*[]domain.Item, error) {
+	return s.itemRepository.GetAllItem()
+}
+
 func (s *ItemService) GetItemByID(id int) (*domain.Item, error) {
 	if id <= 0 {
 		return nil, domain.ErrInvalid

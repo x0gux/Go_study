@@ -71,6 +71,22 @@ func (i *ItemHandler) FoundItemById(c echo.Context) error {
 	return c.JSON(http.StatusOK, item)
 }
 
+// GetAllItem godoc
+// @Summary      아이템 전체 조회
+// @Description  모든 아이템을 조회합니다.
+// @Tags         items
+// @Produce      json
+// @Success      200  {object}  []domain.Item
+// @Failure      500  {object}  map[string]interface{}
+// @Router       /items [get]
+func (i *ItemHandler) GetAllItem(c echo.Context) error {
+	item, err := i.itemService.GetAllItem()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{"error": "Failed to get all items"})
+	}
+	return c.JSON(http.StatusOK, item)
+}
+
 // DeleteByID godoc
 // @Summary      아이템 삭제
 // @Description  ID로 특정 아이템을 삭제합니다.
@@ -82,7 +98,7 @@ func (i *ItemHandler) FoundItemById(c echo.Context) error {
 // @Failure      404  {object}  map[string]interface{}
 // @Router       /items/{id} [delete]
 func (i *ItemHandler) DeleteByID(c echo.Context) error {
-	id, err := strconv.Atoi((c.Param("id")))
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid item ID"})
 	}

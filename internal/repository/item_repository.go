@@ -22,6 +22,12 @@ func (r *ItemRepository) Create(item *domain.ItemRequest) (*domain.Item, error) 
 	return &domain.Item{}, nil
 }
 
+func (r *ItemRepository) GetAllItem() (*[]domain.Item, error) {
+	var items []domain.Item
+	r.db.Debug().Table("items").Find(&items)
+	return &items, nil
+}
+
 func (r *ItemRepository) FindByID(id int) (*domain.Item, error) {
 	var item domain.Item
 	r.db.Debug().Where("id = ?", id).First(&item)

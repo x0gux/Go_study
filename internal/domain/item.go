@@ -23,12 +23,14 @@ type ItemResponse struct {
 
 type ItemRepository interface {
 	Create(item *ItemRequest) (*Item, error)
+	GetAllItem() (*[]Item, error)
 	FindByID(id int) (*Item, error)
 	DeleteByID(id int) (*Item, error)
 }
 
 type ItemService interface {
 	CreateItem(item *ItemRequest) (*Item, error)
+	GetAllItem() (*[]Item, error)
 	GetItemByID(id int) (*Item, error)
 	DeleteByID(id int) (*Item, error)
 }

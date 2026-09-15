@@ -14,6 +14,8 @@ definitions:
     properties:
       description:
         type: string
+      id:
+        type: integer
       name:
         type: string
       price:
@@ -23,6 +25,25 @@ info:
   contact: {}
 paths:
   /items:
+    get:
+      description: 모든 아이템을 조회합니다.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Item'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 아이템 전체 조회
+      tags:
+      - items
     post:
       consumes:
       - application/json
