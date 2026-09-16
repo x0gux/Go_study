@@ -24,7 +24,7 @@ func (r *ItemRepository) Create(item *domain.ItemRequest) (*domain.Item, error) 
 
 func (r *ItemRepository) GetAllItem() (*[]domain.Item, error) {
 	var items []domain.Item
-	r.db.Debug().Table("items").Find(&items)
+	r.db.Debug().Table("items").Order("ID ASC").Find(&items)
 	return &items, nil
 }
 
