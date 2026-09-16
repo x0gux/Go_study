@@ -18,8 +18,16 @@ func NewRepository(db *gorm.DB) domain.ItemRepository {
 }
 
 func (r *ItemRepository) Create(item *domain.ItemRequest) (*domain.Item, error) {
-	r.db.Debug().Table("items").Create(item)
-	return &domain.Item{}, nil
+	itemreq := &domain.Item{
+		Name:        item.Name,
+		Price:       item.Price,
+		Description: item.Description,
+	}
+	r.db.Debug().Table("items").Create(itemreq)
+	if r.db.Error != nil {
+		return nil, r.db.Error
+	}
+	return itemreq, nil
 }
 
 func (r *ItemRepository) GetAllItem() (*[]domain.Item, error) {

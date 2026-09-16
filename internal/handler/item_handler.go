@@ -39,14 +39,7 @@ func (i *ItemHandler) CreateItem(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, echo.Map{"error": "Failed to create item"})
 	}
 
-	returnItem := domain.ItemResponse{
-		ID:          createdItem.ID,
-		Name:        createdItem.Name,
-		Description: createdItem.Description,
-		Price:       createdItem.Price,
-	}
-
-	return c.JSON(http.StatusCreated, returnItem)
+	return c.JSON(http.StatusCreated, createdItem)
 }
 
 // FoundItemById godoc
