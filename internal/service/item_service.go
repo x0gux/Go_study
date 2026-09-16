@@ -40,3 +40,13 @@ func (s *ItemService) DeleteByID(id int) (*domain.Item, error) {
 	}
 	return s.itemRepository.DeleteByID(id)
 }
+
+func (s *ItemService) ModifyById(id int, item *domain.ItemRequest) (*domain.Item, error) {
+	if id <= 0 {
+		return nil, domain.ErrInvalid
+	}
+	if item.Price <= 0 {
+		return nil, domain.ErrInvalid
+	}
+	return s.itemRepository.ModifyById(id, item)
+}

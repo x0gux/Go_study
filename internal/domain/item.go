@@ -8,7 +8,6 @@ type Item struct {
 }
 
 type ItemRequest struct {
-	ID          int     `gorm:"primaryKey;autoIncrement"`
 	Name        string  `json:"name"`
 	Price       float64 `json:"price"`
 	Description string  `json:"description"`
@@ -26,6 +25,7 @@ type ItemRepository interface {
 	GetAllItem() (*[]Item, error)
 	FindByID(id int) (*Item, error)
 	DeleteByID(id int) (*Item, error)
+	ModifyById(id int, item *ItemRequest) (*Item, error)
 }
 
 type ItemService interface {
@@ -33,4 +33,5 @@ type ItemService interface {
 	GetAllItem() (*[]Item, error)
 	GetItemByID(id int) (*Item, error)
 	DeleteByID(id int) (*Item, error)
+	ModifyById(id int, item *ItemRequest) (*Item, error)
 }

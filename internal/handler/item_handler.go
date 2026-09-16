@@ -108,3 +108,31 @@ func (i *ItemHandler) DeleteByID(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, item)
 }
+
+// ModifyById godoc
+// @Summary      아이템 수정
+// @Description  ID로 특정 아이템을 수정합니다.
+// @Tags         items
+// @Produce      json
+// @Param        id   path      int  true  "Item ID"
+// @Param        item  body      domain.ItemRequest  true  "Item to modify"
+// @Success      200  {object}  domain.ItemRequest
+// @Failure      400  {object}  map[string]interface{}
+// @Failure      404  {object}  map[string]interface{}
+// @Router       /items/{id} [put]
+func (i *ItemHandler) ModifyById(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid item ID"})
+	}
+	var items domain.ItemRequest
+	if err := c.Bind(&items); err != nil {
+		return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid request body"})
+	}
+	item, err := i.itemService.ModifyById(id, &items)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, echo.Map{"error": "Item not found"})
+	}
+	return c.JSON(http.StatusOK, item)
+}

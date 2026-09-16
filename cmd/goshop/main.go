@@ -32,6 +32,7 @@ func main() {
 	e.DELETE("/items/:id", itemHandler.DeleteByID)
 	e.GET("/items", itemHandler.GetAllItem)
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
+	e.PUT("/items/:id", itemHandler.ModifyById)
 
 	errs := e.Start(":" + port)
 	if errs != nil || err != nil {

@@ -45,3 +45,17 @@ func (r *ItemRepository) DeleteByID(id int) (*domain.Item, error) {
 	}
 	return &item, nil
 }
+
+func (r *ItemRepository) ModifyById(id int, item *domain.ItemRequest) (*domain.Item, error) {
+	var items domain.Item
+	var modifyitem = r.db.Debug().Table("items").Where("id = ?", id).Updates(map[string]any{
+		"name":        item.Name,
+		"price":       item.Price,
+		"description": item.Description,
+	})
+
+	if modifyitem.Error != nil {
+		return nil, modifyitem.Error
+	}
+	return &items, nil
+}

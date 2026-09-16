@@ -14,8 +14,6 @@ definitions:
     properties:
       description:
         type: string
-      id:
-        type: integer
       name:
         type: string
       price:
@@ -130,6 +128,40 @@ paths:
             additionalProperties: true
             type: object
       summary: 아이템 단건 조회
+      tags:
+      - items
+    put:
+      description: ID로 특정 아이템을 수정합니다.
+      parameters:
+      - description: Item ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Item to modify
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/domain.ItemRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.ItemRequest'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 아이템 수정
       tags:
       - items
 swagger: "2.0"
